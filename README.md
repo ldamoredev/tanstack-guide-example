@@ -61,7 +61,7 @@ This project is configured for Netlify with `@netlify/vite-plugin-tanstack-start
 2. Create a new Netlify site from that repository.
 3. Use the default build command from `netlify.toml`: `corepack pnpm build`.
 4. Keep Node set to `22.14.0` or newer. `netlify.toml` already pins `NODE_VERSION` to `22.14.0`.
-5. Use `.output/public` as the publish directory.
+5. Use `dist` as the publish directory.
 6. Deploy.
 
 The plugin prepares the TanStack Start server runtime during `vite build`, so the API routes and pages deploy together as one Netlify app.
