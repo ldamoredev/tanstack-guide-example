@@ -15,7 +15,7 @@ A personal learning playground for the TanStack ecosystem. The app is built with
 - Node `^20.19.0 || >=22.12.0`
 - pnpm through Corepack
 
-The Netlify TanStack Start plugin requires Node `22.12.0` or newer on the deployment runtime. The repo includes an `.nvmrc`, so this is the usual local setup:
+The Netlify TanStack Start plugin requires Node `22.12.0` or newer on the deployment runtime. This repo pins Node `22.14.0` because it includes a newer Corepack release with the pnpm signing keys needed by Netlify installs. The repo includes an `.nvmrc`, so this is the usual local setup:
 
 ```bash
 nvm use
@@ -60,7 +60,7 @@ This project is configured for Netlify with `@netlify/vite-plugin-tanstack-start
 1. Push the repository to GitHub.
 2. Create a new Netlify site from that repository.
 3. Use the default build command from `netlify.toml`: `corepack pnpm build`.
-4. Keep Node set to `22.12.0` or newer. `netlify.toml` already pins `NODE_VERSION` to `22.12.0`.
+4. Keep Node set to `22.14.0` or newer. `netlify.toml` already pins `NODE_VERSION` to `22.14.0`.
 5. Deploy.
 
 The plugin prepares the TanStack Start server runtime during `vite build`, so the API routes and pages deploy together as one Netlify app.
