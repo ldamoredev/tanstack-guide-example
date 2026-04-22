@@ -113,7 +113,7 @@ export function ProductTable({
         </div>
         <p className="lab-note m-0">{copy.products.table.note}</p>
       </div>
-      <div className="overflow-x-auto">
+      <div className="hidden overflow-x-auto md:block">
         <table className="min-w-full border-collapse">
           <thead className="bg-[color-mix(in_oklab,var(--lagoon)_11%,var(--surface-strong))]">
             {table.getHeaderGroups().map((headerGroup) => (
@@ -153,6 +153,66 @@ export function ProductTable({
             ))}
           </tbody>
         </table>
+      </div>
+
+      <div className="grid gap-3 p-4 md:hidden">
+        {table.getRowModel().rows.map((row) => {
+          const product = row.original
+
+          return (
+            <article
+              key={product.id}
+              className="mobile-data-card rounded-2xl border border-[var(--line)] bg-[color-mix(in_oklab,var(--surface-strong)_88%,var(--lagoon)_12%)] p-4"
+            >
+              <Link
+                to="/products/$productId"
+                params={{ productId: product.id }}
+                search={(prev) => prev}
+                className="text-base font-semibold text-[var(--sea-ink)] no-underline"
+              >
+                {product.name}
+              </Link>
+              <dl className="mt-3 grid grid-cols-2 gap-3 text-sm">
+                <div>
+                  <dt className="lab-note">SKU</dt>
+                  <dd className="m-0 font-mono text-[var(--sea-ink)]">
+                    {product.sku}
+                  </dd>
+                </div>
+                <div>
+                  <dt className="lab-note">
+                    {copy.products.table.header.stock}
+                  </dt>
+                  <dd className="m-0 text-[var(--sea-ink)]">{product.stock}</dd>
+                </div>
+                <div>
+                  <dt className="lab-note">
+                    {copy.products.table.header.category}
+                  </dt>
+                  <dd className="m-0 text-[var(--sea-ink)]">
+                    {getLocalizedCategoryLabel(product.categoryId, locale)}
+                  </dd>
+                </div>
+                <div>
+                  <dt className="lab-note">
+                    {copy.products.table.header.price}
+                  </dt>
+                  <dd className="m-0 text-[var(--sea-ink)]">
+                    {formatUsdCurrency(product.price, locale)}
+                  </dd>
+                </div>
+              </dl>
+              <Link
+                to="/products/$productId"
+                params={{ productId: product.id }}
+                search={(prev) => prev}
+                className="mt-4 inline-flex text-sm font-semibold text-[var(--lagoon-deep)] no-underline"
+              >
+                {copy.products.table.inspect}
+              </Link>
+            </article>
+          )
+        })}
       </div>
 
       {data.length === 0 && (

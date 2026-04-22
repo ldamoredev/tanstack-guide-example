@@ -21,7 +21,10 @@ export function ProductsPage({ search }: ProductsPageProps) {
   const productsQuery = useSuspenseQuery(productsListQueryOptions(search))
   const products = productsQuery.data
 
-  function updateSort(currentSort: ProductSortValue, key: 'name' | 'price' | 'stock') {
+  function updateSort(
+    currentSort: ProductSortValue,
+    key: 'name' | 'price' | 'stock',
+  ) {
     navigate({
       search: (prev) =>
         validateProductsSearch({
@@ -32,43 +35,50 @@ export function ProductsPage({ search }: ProductsPageProps) {
   }
 
   return (
-    <main className="page-wrap px-4 py-12">
-      <section className="island-shell rounded-[2rem] p-6 sm:p-8">
+    <main className="page-wrap px-3 py-8 sm:px-4 sm:py-12">
+      <section className="island-shell rounded-[1.5rem] p-4 sm:rounded-[2rem] sm:p-8">
         <div className="mb-4 flex flex-wrap gap-2">
-          <span className="lab-chip lab-chip--data">{copy.products.chips.dataBacked}</span>
-          <span className="lab-chip lab-chip--route">{copy.products.chips.loader}</span>
-          <span className="lab-chip lab-chip--tooling">{copy.products.chips.query}</span>
-          <span className="lab-chip lab-chip--route">{copy.products.chips.searchParams}</span>
+          <span className="lab-chip lab-chip--data">
+            {copy.products.chips.dataBacked}
+          </span>
+          <span className="lab-chip lab-chip--route">
+            {copy.products.chips.loader}
+          </span>
+          <span className="lab-chip lab-chip--tooling">
+            {copy.products.chips.query}
+          </span>
+          <span className="lab-chip lab-chip--route">
+            {copy.products.chips.searchParams}
+          </span>
         </div>
         <p className="island-kicker mb-2">Products</p>
-        <h1 className="display-title mb-3 text-4xl font-bold text-[var(--sea-ink)] sm:text-5xl">
+        <h1 className="display-title mb-3 text-3xl font-bold text-[var(--sea-ink)] sm:text-5xl">
           {copy.products.overview.title}
         </h1>
         <p className="m-0 max-w-3xl text-base leading-8 text-[var(--sea-ink-soft)]">
           {copy.products.overview.description}
         </p>
-        <Link
-          to="/products/new"
-          className="lab-button mt-5"
-        >
-          {copy.products.overview.create}
-        </Link>
-        <Link
-          to="/products/virtual"
-          search={search}
-          className="lab-button lab-button-secondary mt-5 ml-3"
-        >
-          {copy.products.overview.virtual}
-        </Link>
-        <Link
-          to="/products/db"
-          className="lab-button lab-button-secondary mt-5 ml-3"
-        >
-          {copy.products.overview.db}
-        </Link>
+        <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <Link to="/products/new" className="lab-button justify-center">
+            {copy.products.overview.create}
+          </Link>
+          <Link
+            to="/products/virtual"
+            search={search}
+            className="lab-button lab-button-secondary justify-center"
+          >
+            {copy.products.overview.virtual}
+          </Link>
+          <Link
+            to="/products/db"
+            className="lab-button lab-button-secondary justify-center"
+          >
+            {copy.products.overview.db}
+          </Link>
+        </div>
       </section>
 
-      <section className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <section className="mt-6 grid gap-4 sm:mt-8 md:grid-cols-2 xl:grid-cols-4">
         <MetricCard
           label={copy.products.overview.metrics.matchingRows}
           value={String(products.totalItems)}
@@ -165,7 +175,9 @@ function MetricCard({
   return (
     <article className="feature-card rounded-2xl p-5">
       <p className="island-kicker mb-2">{label}</p>
-      <p className="mb-2 text-xl font-semibold text-[var(--sea-ink)]">{value}</p>
+      <p className="mb-2 text-xl font-semibold text-[var(--sea-ink)]">
+        {value}
+      </p>
       <p className="m-0 text-sm leading-7 text-[var(--sea-ink-soft)]">
         {description}
       </p>

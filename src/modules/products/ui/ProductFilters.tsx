@@ -1,8 +1,5 @@
 import { DebouncedSearchInput } from './DebouncedSearchInput'
-import {
-  CATEGORY_OPTIONS,
-  SORT_OPTIONS,
-} from '../model/search'
+import { CATEGORY_OPTIONS, SORT_OPTIONS } from '../model/search'
 import {
   getLocalizedCategoryLabel,
   getLocalizedSortLabel,
@@ -32,7 +29,7 @@ export function ProductFilters({
   const activeSort = getLocalizedSortLabel(search.sort, locale)
 
   return (
-    <section className="island-shell mt-8 rounded-2xl p-5">
+    <section className="island-shell mt-6 rounded-2xl p-4 sm:mt-8 sm:p-5">
       <div className="mb-5 flex flex-wrap items-start justify-between gap-4">
         <div>
           <p className="island-kicker mb-2">{copy.products.filters.kicker}</p>
@@ -43,11 +40,23 @@ export function ProductFilters({
             {copy.products.filters.description}
           </p>
         </div>
-        <div className="grid gap-2 sm:min-w-[260px] sm:grid-cols-2">
-          <SummaryChip label={copy.products.filters.labels.category} value={activeCategory} />
-          <SummaryChip label={copy.products.filters.labels.page} value={`${products.page} / ${products.totalPages}`} />
-          <SummaryChip label={copy.products.filters.labels.rows} value={String(products.totalItems)} />
-          <SummaryChip label={copy.products.filters.labels.sort} value={activeSort} />
+        <div className="grid w-full gap-2 sm:min-w-[260px] sm:grid-cols-2 lg:w-auto">
+          <SummaryChip
+            label={copy.products.filters.labels.category}
+            value={activeCategory}
+          />
+          <SummaryChip
+            label={copy.products.filters.labels.page}
+            value={`${products.page} / ${products.totalPages}`}
+          />
+          <SummaryChip
+            label={copy.products.filters.labels.rows}
+            value={String(products.totalItems)}
+          />
+          <SummaryChip
+            label={copy.products.filters.labels.sort}
+            value={activeSort}
+          />
         </div>
       </div>
 

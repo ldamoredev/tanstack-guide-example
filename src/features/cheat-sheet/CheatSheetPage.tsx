@@ -31,10 +31,10 @@ export default function CheatSheetPage({ locale }: { locale: Locale }) {
   const toc = blocks.filter(isTocHeading)
 
   return (
-    <main className="page-wrap px-4 py-12">
+    <main className="page-wrap px-3 py-8 sm:px-4 sm:py-12">
       <section
         aria-label={`${copy.kicker} overview`}
-        className="island-shell rounded-[2rem] p-6 sm:p-8"
+        className="island-shell rounded-[1.5rem] p-4 sm:rounded-[2rem] sm:p-8"
       >
         <div className="grid gap-6 lg:grid-cols-[1.25fr_0.75fr] lg:items-end">
           <div>
@@ -42,7 +42,7 @@ export default function CheatSheetPage({ locale }: { locale: Locale }) {
               <span className="lab-chip lab-chip--tooling">{copy.kicker}</span>
               <span className="lab-chip lab-chip--route">TanStack</span>
             </div>
-            <h1 className="display-title mb-3 text-4xl font-bold text-[var(--sea-ink)] sm:text-5xl">
+            <h1 className="display-title mb-3 text-3xl font-bold text-[var(--sea-ink)] sm:text-5xl">
               {blocks[0]?.type === 'heading' ? blocks[0].text : copy.kicker}
             </h1>
             <p className="m-0 max-w-3xl text-base leading-8 text-[var(--sea-ink-soft)]">
@@ -73,10 +73,10 @@ export default function CheatSheetPage({ locale }: { locale: Locale }) {
         </div>
       </section>
 
-      <section className="mt-8 grid gap-6 lg:grid-cols-[0.72fr_1.28fr]">
+      <section className="mt-6 grid gap-6 lg:mt-8 lg:grid-cols-[0.72fr_1.28fr]">
         <aside
           aria-label={`${copy.kicker} navigation`}
-          className="island-shell sticky top-32 max-h-[calc(100vh-9rem)] overflow-y-auto rounded-2xl p-5"
+          className="island-shell rounded-2xl p-4 sm:p-5 lg:sticky lg:top-32 lg:max-h-[calc(100vh-9rem)] lg:overflow-y-auto"
         >
           <h2 className="mt-0 mb-4 text-lg font-semibold text-[var(--sea-ink)]">
             {copy.kicker}
@@ -94,7 +94,7 @@ export default function CheatSheetPage({ locale }: { locale: Locale }) {
           </nav>
         </aside>
 
-        <article className="island-shell cheat-sheet-doc rounded-[2rem] p-6 sm:p-8">
+        <article className="island-shell cheat-sheet-doc learning-timeline min-w-0 rounded-[1.5rem] p-4 sm:rounded-[2rem] sm:p-8">
           {blocks.slice(1).map((block, index) => (
             <MarkdownBlockView block={block} key={`${block.type}-${index}`} />
           ))}

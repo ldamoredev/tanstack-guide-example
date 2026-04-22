@@ -8,39 +8,37 @@ export default function Header() {
   const { copy } = useI18n()
 
   return (
-    <header className="sticky top-0 z-50 border-b border-[var(--line)] bg-[color-mix(in_oklab,var(--header-bg)_84%,transparent_16%)] px-4 backdrop-blur-xl">
-      <nav className="page-wrap flex flex-col gap-3 py-3 sm:gap-4 sm:py-4">
-        <div className="flex flex-wrap items-start justify-between gap-3 sm:items-center">
+    <header className="sticky top-0 z-50 border-b border-[var(--line)] bg-[color-mix(in_oklab,var(--header-bg)_88%,transparent_12%)] px-2 backdrop-blur-xl sm:px-4">
+      <nav className="page-wrap flex flex-col gap-2 py-2 sm:gap-3 sm:py-4">
+        <div className="flex min-w-0 items-center gap-2 sm:gap-3">
           <Link
             to="/"
-            className="inline-flex min-w-0 max-w-full items-center gap-3 rounded-full border border-[var(--chip-line)] bg-[var(--chip-bg)] px-3 py-2 text-sm text-[var(--sea-ink)] no-underline shadow-[0_16px_32px_rgba(15,23,42,0.1)] sm:max-w-[34rem] sm:px-4"
+            className="inline-flex min-w-0 flex-1 items-center gap-2 rounded-2xl border border-[var(--chip-line)] bg-[var(--chip-bg)] px-2.5 py-2 text-sm text-[var(--sea-ink)] no-underline shadow-[0_12px_26px_rgba(15,23,42,0.1)] sm:max-w-[34rem] sm:gap-3 sm:rounded-full sm:px-4"
           >
-            <span className="flex h-8 w-8 items-center justify-center rounded-[0.85rem] bg-[linear-gradient(135deg,var(--lagoon),#7dd3fc)] font-mono text-[0.72rem] font-bold tracking-[0.16em] text-slate-950 shadow-[0_0_24px_rgba(34,211,238,0.22)]">
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[0.85rem] bg-[linear-gradient(135deg,var(--lagoon),#7dd3fc)] font-mono text-[0.72rem] font-bold tracking-[0.16em] text-slate-950 shadow-[0_0_24px_rgba(34,211,238,0.22)]">
               TS
             </span>
             <span className="min-w-0 flex-1">
-              <span className="block truncate text-sm font-semibold tracking-tight sm:text-base">
+              <span className="block truncate text-xs font-semibold tracking-tight sm:text-base">
                 {copy.header.title}
               </span>
-              <span className="lab-note hidden max-w-[26rem] sm:block">
+              <span className="lab-note hidden max-w-[26rem] md:block">
                 {copy.header.subtitle}
               </span>
             </span>
           </Link>
 
-          <div className="ml-auto flex flex-wrap items-center justify-end gap-2">
-            <span className="lab-chip lab-chip--route hidden xl:inline-flex">
+          <div className="flex shrink-0 items-center justify-end gap-2">
+            <span className="lab-chip lab-chip--route hidden lg:inline-flex">
               {copy.header.soloWorkspace}
             </span>
             <LanguageToggle />
+            <ThemeToggle />
           </div>
         </div>
 
-        <div className="flex w-full flex-wrap items-center gap-3 border-t border-[var(--line)] pt-3 sm:justify-between sm:pt-0 sm:border-t-0">
-          <div className="flex min-w-0 flex-1 flex-wrap items-center gap-x-5 gap-y-2 text-sm font-semibold">
-            <span className="lab-chip lab-chip--route xl:hidden">
-              {copy.header.soloWorkspace}
-            </span>
+        <div className="border-t border-[var(--line)] pt-2 sm:border-t-0 sm:pt-0">
+          <div className="nav-scroll flex min-w-0 items-center gap-2 overflow-x-auto pb-1 text-sm font-semibold sm:gap-x-5 sm:pb-0">
             <Link
               to="/"
               className="nav-link"
@@ -87,14 +85,10 @@ export default function Header() {
             </Link>
             <Link
               to="/suppliers"
-              className="lab-note no-underline transition hover:text-[var(--sea-ink)]"
+              className="lab-note shrink-0 no-underline transition hover:text-[var(--sea-ink)]"
             >
               {copy.header.nav.suppliers}
             </Link>
-          </div>
-
-          <div className="ml-auto flex items-center">
-            <ThemeToggle />
           </div>
         </div>
       </nav>

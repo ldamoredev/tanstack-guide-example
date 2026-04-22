@@ -23,13 +23,14 @@ export default function LanguageToggle() {
             type="button"
             onClick={() => setLocale(value)}
             aria-pressed={isActive}
-            className={`rounded-full px-3 py-1.5 text-sm font-semibold transition ${
+            className={`rounded-full px-2.5 py-1.5 text-xs font-semibold transition sm:px-3 sm:text-sm ${
               isActive
                 ? 'bg-[var(--lagoon)] text-slate-950 shadow-[0_10px_24px_rgba(34,211,238,0.24)]'
                 : 'text-[var(--sea-ink-soft)] hover:text-[var(--sea-ink)]'
             }`}
           >
-            {label}
+            <span className="sm:hidden">{value.toUpperCase()}</span>
+            <span className="hidden sm:inline">{label}</span>
           </button>
         )
       })}
