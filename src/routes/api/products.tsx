@@ -1,24 +1,18 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { proxyProductsRequest } from '#/modules/products'
-import { buildProxyRequestInit } from '#/modules/products'
+import {
+  createProductResponse,
+  listProductsResponse,
+} from '#/modules/products/server/catalog'
 
 export const Route = createFileRoute('/api/products')({
   server: {
     handlers: {
       GET: async ({ request }) => {
         const requestUrl = new URL(request.url)
-        return proxyProductsRequest(
-          '/products',
-          requestUrl.searchParams,
-          await buildProxyRequestInit(request),
-        )
+        return listProductsResponse(requestUrl.searchParams)
       },
       POST: async ({ request }) => {
-        return proxyProductsRequest(
-          '/products',
-          undefined,
-          await buildProxyRequestInit(request),
-        )
+        return createProductResponse(request)
       },
     },
   },

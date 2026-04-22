@@ -32,7 +32,8 @@ vi.mock('#/modules/products', () => ({
 }))
 
 vi.mock('#/lib/i18n', async () => {
-  const actual = await vi.importActual<typeof import('#/lib/i18n')>('#/lib/i18n')
+  const actual =
+    await vi.importActual<typeof import('#/lib/i18n')>('#/lib/i18n')
 
   return {
     ...actual,
@@ -76,5 +77,11 @@ describe('learning shell framing', () => {
         /personal tanstack learning playground for routes, loaders, query flows, and experiments/i,
       ),
     ).toBeTruthy()
+    const creatorLink = screen.getByRole('link', {
+      name: /made by lautaro damore/i,
+    })
+    expect(creatorLink.getAttribute('href')).toBe(
+      'https://github.com/ldamoredev',
+    )
   })
 })

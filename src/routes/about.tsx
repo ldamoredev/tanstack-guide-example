@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { CREATOR_GITHUB_URL } from '#/lib/creator'
 import { useI18n } from '#/lib/i18n'
 
 export const Route = createFileRoute('/about')({
@@ -42,11 +43,27 @@ function About() {
           </article>
           <article className="feature-card rounded-2xl p-5">
             <h2 className="mb-2 text-lg font-semibold text-[var(--sea-ink)]">
-              Future Node API
+              {copy.about.apiTitle}
             </h2>
             <p className="m-0 text-sm leading-7 text-[var(--sea-ink-soft)]">
-              {copy.about.futureApi}
+              {copy.about.apiRoutes}
             </p>
+          </article>
+          <article className="feature-card rounded-2xl p-5">
+            <h2 className="mb-2 text-lg font-semibold text-[var(--sea-ink)]">
+              {copy.about.creatorTitle}
+            </h2>
+            <p className="m-0 text-sm leading-7 text-[var(--sea-ink-soft)]">
+              {copy.about.creatorText}
+            </p>
+            <a
+              href={CREATOR_GITHUB_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-4 inline-flex text-sm font-semibold text-[var(--lagoon-deep)] no-underline"
+            >
+              {copy.about.creatorLink}
+            </a>
           </article>
         </div>
       </section>

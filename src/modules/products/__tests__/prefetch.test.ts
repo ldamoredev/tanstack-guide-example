@@ -16,7 +16,7 @@ afterEach(() => {
 })
 
 describe('hydrateProductsListQuery', () => {
-  it('hydrates the shared query cache from the backend helper', async () => {
+  it('hydrates the shared query cache from the app catalog helper', async () => {
     const queryClient = new QueryClient()
     const search = {
       q: 'desk',
@@ -36,9 +36,9 @@ describe('hydrateProductsListQuery', () => {
       .spyOn(server, 'fetchProductsFromBff')
       .mockResolvedValue(products)
 
-    await expect(hydrateProductsListQuery(queryClient, search)).resolves.toEqual(
-      products,
-    )
+    await expect(
+      hydrateProductsListQuery(queryClient, search),
+    ).resolves.toEqual(products)
 
     expect(fetchProductsFromBff).toHaveBeenCalledWith(search)
     expect(
@@ -48,7 +48,7 @@ describe('hydrateProductsListQuery', () => {
 })
 
 describe('hydrateProductDetailQuery', () => {
-  it('hydrates the detail query cache from the backend helper', async () => {
+  it('hydrates the detail query cache from the app catalog helper', async () => {
     const queryClient = new QueryClient()
     const product = {
       id: 'prod-desk-lamp',

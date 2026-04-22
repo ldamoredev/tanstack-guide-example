@@ -2,7 +2,14 @@
 
 import React from 'react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react'
+import type * as I18nModule from '#/lib/i18n'
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from '@testing-library/react'
 import { ProductForm } from '../ui/ProductForm'
 import {
   getDefaultProductFormValues,
@@ -11,7 +18,7 @@ import {
 } from '../model/form'
 
 vi.mock('#/lib/i18n', async () => {
-  const actual = await vi.importActual<typeof import('#/lib/i18n')>('#/lib/i18n')
+  const actual = await vi.importActual<typeof I18nModule>('#/lib/i18n')
 
   return {
     ...actual,
@@ -61,7 +68,7 @@ describe('product form helpers', () => {
     })
   })
 
-  it('validates each field against backend-aligned rules', () => {
+  it('validates each field against catalog-aligned rules', () => {
     expect(validateProductFormValue('name', '   ')).toBe('Name is required')
     expect(validateProductFormValue('sku', '')).toBe('SKU is required')
     expect(validateProductFormValue('price', '')).toBe('Price is required')

@@ -6,7 +6,7 @@ import {
 } from '../model/search'
 
 describe('validateProductsSearch', () => {
-  it('normalizes unknown values to backend-aligned defaults', () => {
+  it('normalizes unknown values to catalog-aligned defaults', () => {
     expect(
       validateProductsSearch({
         q: 42,
@@ -17,7 +17,7 @@ describe('validateProductsSearch', () => {
     ).toEqual(DEFAULT_PRODUCTS_SEARCH)
   })
 
-  it('keeps valid backend filter values and trims the query', () => {
+  it('keeps valid catalog filter values and trims the query', () => {
     expect(
       validateProductsSearch({
         q: '  lap  ',
@@ -62,7 +62,7 @@ describe('buildProductsListQueryParams', () => {
     ).toBe('sort=name-asc&page=1')
   })
 
-  it('serializes all active filters for the BFF request', () => {
+  it('serializes all active filters for the app API request', () => {
     expect(
       buildProductsListQueryParams({
         q: 'mouse',

@@ -15,6 +15,12 @@ export default [
     },
   },
   {
-    ignores: ['eslint.config.js', 'prettier.config.js'],
+    ignores: [
+      '.netlify/**',
+      '.output/**',
+      'eslint.config.js',
+      'node_modules/.nitro/**',
+      'prettier.config.js',
+    ],
   },
 ]

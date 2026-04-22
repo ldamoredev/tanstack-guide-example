@@ -9,8 +9,8 @@ describe('getToolingCommands', () => {
         purpose: 'Run the TanStack Start app with Nitro in development',
       },
       {
-        command: 'cd backend && pnpm dev',
-        purpose: 'Run the separate Node.js TypeScript backend',
+        command: 'pnpm build',
+        purpose: 'Build the app for the Netlify serverless runtime',
       },
       {
         command: 'pnpm test',

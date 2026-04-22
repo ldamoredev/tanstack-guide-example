@@ -1,12 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import {
-  ProductNotFoundError,
-  ProductsApiError,
-} from '../model/errors'
-import {
-  fetchProductById,
-  fetchProducts,
-} from '../api/client'
+import { ProductNotFoundError } from '../model/errors'
+import type { ProductsApiError } from '../model/errors'
+import { fetchProductById, fetchProducts } from '../api/client'
 
 const originalFetch = globalThis.fetch
 
@@ -16,7 +11,7 @@ afterEach(() => {
 })
 
 describe('fetchProducts', () => {
-  it('calls the thin app-owned BFF endpoint with backend-aligned search params', async () => {
+  it('calls the app-owned API endpoint with catalog-aligned search params', async () => {
     const responsePayload = {
       data: [],
       page: 2,
@@ -51,7 +46,7 @@ describe('fetchProducts', () => {
     )
   })
 
-  it('throws a useful error when the proxy request fails', async () => {
+  it('throws a useful error when the API request fails', async () => {
     globalThis.fetch = vi.fn().mockResolvedValue(
       new Response(JSON.stringify({ message: 'boom' }), {
         status: 502,
@@ -93,7 +88,7 @@ describe('fetchProducts', () => {
 })
 
 describe('fetchProductById', () => {
-  it('requests a single product through the BFF layer', async () => {
+  it('requests a single product through the app API layer', async () => {
     const product = {
       id: 'prod-mouse-wireless',
       name: 'Wireless Mouse',

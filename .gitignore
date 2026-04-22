@@ -13,3 +13,6 @@ __unconfig*
 todos.json
 .aidesigner/*
 !.aidesigner/.gitkeep
+
+# Local Netlify folder
+.netlify

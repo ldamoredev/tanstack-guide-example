@@ -1,11 +1,5 @@
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-  type ReactNode,
-} from 'react'
+import { createContext, useContext, useEffect, useMemo, useState } from 'react'
+import type { ReactNode } from 'react'
 import type {
   ProductCategoryValue,
   ProductSortValue,
@@ -103,6 +97,7 @@ const messages = {
       },
       x: 'Follow TanStack on X',
       github: 'Go to TanStack GitHub',
+      creator: 'Made by Lautaro Damore',
     },
     home: {
       kicker: 'Personal lab environment',
@@ -125,13 +120,13 @@ const messages = {
         categories:
           'Intentional static reference screen for contrast against dynamic routes.',
         suppliers:
-          'Another static route for comparing structure, not backend behavior.',
+          'Another static route for comparing structure, not data behavior.',
       },
       routeMap: 'Route map',
       routeMapItems: [
         'Overview -> route taxonomy and next steps',
         'Routes -> relationship view and exploration order',
-        'Data -> loader hydration, query state, and BFF-backed flow',
+        'Data -> loader hydration, query state, and app API flow',
         'Static -> comparison surfaces that stay intentionally hardcoded',
       ],
       howToExplore: 'How to explore',
@@ -236,9 +231,14 @@ const messages = {
       router:
         'TanStack Router handles app and page routing, plus URL state like the products search params. It keeps links, params, and rendered pages aligned in a type-safe way.',
       nitro:
-        'Nitro handles the server/runtime routing layer. It is what lets the app run its server-side pieces and future API routes without changing the overall app structure.',
-      futureApi:
-        'The future Node API will provide a conventional server entry point for inventory operations, data access, and any server-only workflows that should live outside the browser.',
+        'Nitro handles the server/runtime routing layer. It is what lets the app run its server-side pieces and API routes without changing the overall app structure.',
+      apiTitle: 'App API routes',
+      apiRoutes:
+        'The product endpoints now live inside TanStack Start API routes, so the playground can deploy as one Netlify app without a separate backend process.',
+      creatorTitle: 'Project authorship',
+      creatorText:
+        'This learning playground was made by Lautaro Damore as a practical space for studying TanStack concepts.',
+      creatorLink: 'Lautaro Damore on GitHub',
     },
     products: {
       chips: {
@@ -256,7 +256,7 @@ const messages = {
       overview: {
         title: 'Products control room',
         description:
-          'This is the main workspace for exploring filter orchestration, row scanning, loader hydration, TanStack Query cache behavior, and the BFF-backed data flow. It is the control room for the product area.',
+          'This is the main workspace for exploring filter orchestration, row scanning, loader hydration, TanStack Query cache behavior, and the app-owned API flow. It is the control room for the product area.',
         create: 'Create product',
         virtual: 'Virtualized catalog',
         db: 'DB live view',
@@ -302,13 +302,13 @@ const messages = {
         title: 'Scan records, compare fields, and open the next route.',
         note: 'Sort cues stay in the header so row scanning remains fast.',
         inspect: 'Inspect',
-        empty: 'No products match the current backend filters right now.',
+        empty: 'No products match the current filters right now.',
       },
       detail: {
         kicker: 'Product Detail',
         title: (name: string) => `Product inspection: ${name}`,
         description:
-          'This inspection surface loads backend-backed product data through the BFF layer, with the loader and component sharing the same shared query cache entry.',
+          'This inspection surface loads product data through the app API layer, with the loader and component sharing the same query cache entry.',
         edit: 'Edit product',
         cards: {
           identity: 'Identity',
@@ -377,7 +377,7 @@ const messages = {
         kicker: 'TanStack DB',
         title: 'Live client collection with optimistic stock updates.',
         description:
-          'This page keeps products in a TanStack DB collection, derives a live low-stock view, and applies stock changes optimistically before the backend confirms them.',
+          'This page keeps products in a TanStack DB collection, derives a live low-stock view, and applies stock changes optimistically before the app API confirms them.',
         back: 'Back to products',
         showAll: 'Show all products',
         showLowStockOnly: 'Show low stock only',
@@ -432,6 +432,7 @@ const messages = {
       },
       x: 'Seguir a TanStack en X',
       github: 'Ir al GitHub de TanStack',
+      creator: 'Hecho por Lautaro Damore',
     },
     home: {
       kicker: 'Entorno personal de laboratorio',
@@ -459,7 +460,7 @@ const messages = {
       routeMapItems: [
         'Resumen -> taxonomía de rutas y próximos pasos',
         'Rutas -> vista de relaciones y orden de exploración',
-        'Datos -> hidratación del loader, estado de query y flujo respaldado por BFF',
+        'Datos -> hidratación del loader, estado de query y flujo de API de la app',
         'Estático -> superficies de comparación que permanecen intencionalmente fijas',
       ],
       howToExplore: 'Cómo explorar',
@@ -566,9 +567,14 @@ const messages = {
       router:
         'TanStack Router se encarga del enrutado de la app y de las páginas, además del estado en la URL como los search params de productos. Mantiene alineados links, params y páginas renderizadas de forma type-safe.',
       nitro:
-        'Nitro maneja la capa de runtime y routing del servidor. Es lo que permite que la app ejecute sus partes server-side y futuras rutas API sin cambiar la estructura general.',
-      futureApi:
-        'La futura API Node proveerá un punto de entrada de servidor más convencional para operaciones de inventario, acceso a datos y flujos que deban vivir fuera del navegador.',
+        'Nitro maneja la capa de runtime y routing del servidor. Es lo que permite que la app ejecute sus partes server-side y rutas API sin cambiar la estructura general.',
+      apiTitle: 'Rutas API de la app',
+      apiRoutes:
+        'Los endpoints de productos ahora viven dentro de rutas API de TanStack Start, así que el playground puede desplegarse como una sola app en Netlify sin un backend separado.',
+      creatorTitle: 'Autoría del proyecto',
+      creatorText:
+        'Este playground de aprendizaje fue hecho por Lautaro Damore como un espacio práctico para estudiar conceptos de TanStack.',
+      creatorLink: 'Lautaro Damore en GitHub',
     },
     products: {
       chips: {
@@ -586,7 +592,7 @@ const messages = {
       overview: {
         title: 'Centro de control de productos',
         description:
-          'Este es el espacio principal para explorar orquestación de filtros, lectura de filas, hidratación de loaders, comportamiento de caché de TanStack Query y el flujo de datos respaldado por BFF. Es el centro de control del área de productos.',
+          'Este es el espacio principal para explorar orquestación de filtros, lectura de filas, hidratación de loaders, comportamiento de caché de TanStack Query y el flujo de API propio de la app. Es el centro de control del área de productos.',
         create: 'Crear producto',
         virtual: 'Catálogo virtualizado',
         db: 'Vista viva de DB',
@@ -633,13 +639,13 @@ const messages = {
         note: 'Las pistas de orden se quedan en el encabezado para leer filas más rápido.',
         inspect: 'Inspeccionar',
         empty:
-          'No hay productos que coincidan con los filtros de backend ahora mismo.',
+          'No hay productos que coincidan con los filtros actuales ahora mismo.',
       },
       detail: {
         kicker: 'Detalle del producto',
         title: (name: string) => `Inspección del producto: ${name}`,
         description:
-          'Esta superficie de inspección carga datos del producto a través de la capa BFF, con loader y componente compartiendo la misma entrada de caché de query.',
+          'Esta superficie de inspección carga datos del producto a través de la capa API de la app, con loader y componente compartiendo la misma entrada de caché de query.',
         edit: 'Editar producto',
         cards: {
           identity: 'Identidad',
@@ -709,7 +715,7 @@ const messages = {
         title:
           'Colección cliente viva con actualizaciones optimistas de stock.',
         description:
-          'Esta página mantiene productos en una colección de TanStack DB, deriva una vista viva de bajo stock y aplica cambios de stock de forma optimista antes de que el backend los confirme.',
+          'Esta página mantiene productos en una colección de TanStack DB, deriva una vista viva de bajo stock y aplica cambios de stock de forma optimista antes de que la API de la app los confirme.',
         back: 'Volver a productos',
         showAll: 'Mostrar todos los productos',
         showLowStockOnly: 'Mostrar solo bajo stock',
@@ -780,26 +786,27 @@ export function getLocalizedCategoryLabel(
   categoryId: string,
   locale: Locale,
 ): string {
-  return (
-    categoryLabels[locale][categoryId as ProductCategoryValue] ??
-    categoryLabels.en[categoryId as ProductCategoryValue] ??
-    categoryId
-  )
+  const localizedLabels = categoryLabels[locale] as Partial<
+    Record<string, string>
+  >
+  const fallbackLabels = categoryLabels.en as Partial<Record<string, string>>
+
+  return localizedLabels[categoryId] ?? fallbackLabels[categoryId] ?? categoryId
 }
 
 export function getLocalizedSortLabel(
   sortValue: string,
   locale: Locale,
 ): string {
-  return (
-    sortLabels[locale][sortValue as ProductSortValue] ??
-    sortLabels.en[sortValue as ProductSortValue] ??
-    sortValue
-  )
+  const localizedLabels = sortLabels[locale] as Partial<Record<string, string>>
+  const fallbackLabels = sortLabels.en as Partial<Record<string, string>>
+
+  return localizedLabels[sortValue] ?? fallbackLabels[sortValue] ?? sortValue
 }
 
 export function getLocalizedSupplierLabel(supplierId: string): string {
-  return supplierLabels[supplierId as keyof typeof supplierLabels] ?? supplierId
+  const labels = supplierLabels as Partial<Record<string, string>>
+  return labels[supplierId] ?? supplierId
 }
 
 export function getLocalizedProductFormError(

@@ -15,11 +15,11 @@ export function getToolingCommands(locale: Locale = 'en'): ToolingCommand[] {
           : 'Run the TanStack Start app with Nitro in development',
     },
     {
-      command: 'cd backend && pnpm dev',
+      command: 'pnpm build',
       purpose:
         locale === 'es'
-          ? 'Ejecuta el backend Node.js TypeScript por separado'
-          : 'Run the separate Node.js TypeScript backend',
+          ? 'Compila la app para el runtime serverless de Netlify'
+          : 'Build the app for the Netlify serverless runtime',
     },
     {
       command: 'pnpm test',

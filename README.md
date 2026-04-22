@@ -1,13 +1,12 @@
 # TanStack Learning Playground
 
-A personal learning playground for the TanStack ecosystem. The app is built with TanStack Start, Router, Query, Form, Table, Virtual, DB, Pacer, and Devtools, with a small separate Express backend that serves the product data used by the learning flows.
+A personal learning playground for the TanStack ecosystem. The app is built with TanStack Start, Router, Query, Form, Table, Virtual, DB, Pacer, and Devtools. Product data now runs through app-owned TanStack Start API routes, so the normal project flow is a single deployable web app.
 
 ## What Is In This Repo
 
-- `src/routes` contains the TanStack Start/Router file-based routes.
-- `src/modules/products` contains the data-backed product workspace.
+- `src/routes` contains the TanStack Start/Router file-based routes and API routes.
+- `src/modules/products` contains the data-backed product workspace and in-memory demo catalog.
 - `src/features/cheat-sheet` renders the bilingual TanStack cheat-sheet page.
-- `backend` contains the separate mock Node/Express API.
 - `tanstack-cheat-sheet.md` is the English study guide.
 - `tanstack-cheat-sheet.es.md` is the Spanish study guide.
 
@@ -15,9 +14,8 @@ A personal learning playground for the TanStack ecosystem. The app is built with
 
 - Node `^20.19.0 || >=22.12.0`
 - pnpm through Corepack
-- Docker only if you want to run an optional local Postgres container for future database experiments
 
-The repo includes an `.nvmrc`, so this is the usual Node setup:
+The Netlify TanStack Start plugin requires Node `22.12.0` or newer on the deployment runtime. The repo includes an `.nvmrc`, so this is the usual local setup:
 
 ```bash
 nvm use
@@ -26,104 +24,58 @@ corepack enable
 
 ## Install
 
-Install frontend dependencies from the repo root:
+Install dependencies from the repo root:
 
 ```bash
-corepack pnpm install
-```
-
-Install backend dependencies separately:
-
-```bash
-cd backend
 corepack pnpm install
 ```
 
 ## Run The App
 
-Start the mock backend in one terminal:
-
-```bash
-cd backend
-corepack pnpm dev
-```
-
-The backend listens on:
-
-```txt
-http://127.0.0.1:4001
-```
-
-Start the TanStack app in another terminal:
+Start the TanStack app:
 
 ```bash
 corepack pnpm dev
 ```
 
-The frontend listens on:
+The app listens on:
 
 ```txt
 http://localhost:3000
 ```
 
-The frontend BFF uses `BACKEND_URL` when provided and otherwise defaults to `http://127.0.0.1:4001`.
+No separate backend process is required. The product API lives in:
 
-Example override:
-
-```bash
-BACKEND_URL=http://127.0.0.1:4001 corepack pnpm dev
+```txt
+/api/products
+/api/products/:productId
 ```
 
-## Database And Docker Notes
+The demo catalog is in-memory. Mutations are useful for learning TanStack Query, Form, loaders, and optimistic flows, but they are not durable across server restarts, cold starts, or redeploys.
 
-The current product flow does not require a database. It uses the separate Express backend with in-memory mock data so the repo can focus on TanStack learning concepts.
+## Deploy To Netlify
 
-There is currently no committed `docker-compose.yml` or Prisma schema in this workspace. The existing `.env.local` has a `DATABASE_URL` placeholder for future database work, but the app can run without it.
+This project is configured for Netlify with `@netlify/vite-plugin-tanstack-start` and `netlify.toml`.
 
-If you want a local Postgres container ready for future experiments, you can run:
+1. Push the repository to GitHub.
+2. Create a new Netlify site from that repository.
+3. Use the default build command from `netlify.toml`: `corepack pnpm build`.
+4. Keep Node set to `22.12.0` or newer. `netlify.toml` already pins `NODE_VERSION` to `22.12.0`.
+5. Deploy.
 
-```bash
-docker run --name tanstack-learning-postgres \
-  -e POSTGRES_USER=tanstack \
-  -e POSTGRES_PASSWORD=tanstack \
-  -e POSTGRES_DB=tanstack_learning \
-  -p 5432:5432 \
-  -d postgres:16
-```
-
-Then set:
-
-```bash
-DATABASE_URL="postgresql://tanstack:tanstack@localhost:5432/tanstack_learning"
-```
-
-Only add Prisma/database commands once the repo has an actual schema and persistence flow.
+The plugin prepares the TanStack Start server runtime during `vite build`, so the API routes and pages deploy together as one Netlify app.
 
 ## Useful Commands
 
-Run frontend tests:
+Run tests:
 
 ```bash
 corepack pnpm test
 ```
 
-Run backend tests:
+Build for production:
 
 ```bash
-cd backend
-corepack pnpm test
-```
-
-Build the frontend:
-
-```bash
-corepack pnpm build
-```
-
-Build the backend:
-
-```bash
-cd backend
 corepack pnpm build
 ```
 
@@ -131,6 +83,12 @@ Format and lint:
 
 ```bash
 corepack pnpm check
+```
+
+Preview the production build locally:
+
+```bash
+corepack pnpm preview
 ```
 
 ## Routes To Explore
@@ -163,3 +121,4 @@ If the repository URL changes, update `PROJECT_REPOSITORY_URL` in `src/features/
 - TanStack Virtual: https://tanstack.com/virtual
 - TanStack DB: https://tanstack.com/db
 - TanStack Pacer: https://tanstack.com/pacer
+- Netlify TanStack Start deployment: https://docs.netlify.com/build/frameworks/framework-setup-guides/tanstack-start/

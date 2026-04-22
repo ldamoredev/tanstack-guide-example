@@ -1,92 +1,37 @@
-import { afterEach, describe, expect, it, vi } from 'vitest'
-import {
-  fetchProductByIdFromBackend,
-  proxyProductsRequest,
-} from '../server/bff'
+import { afterEach, describe, expect, it } from 'vitest'
 import { ProductNotFoundError } from '../model/errors'
-
-const originalFetch = globalThis.fetch
+import { fetchProductByIdFromBff, fetchProductsFromBff } from '../server/bff'
+import { resetProductCatalog } from '../server/catalog'
 
 afterEach(() => {
-  vi.restoreAllMocks()
-  globalThis.fetch = originalFetch
+  resetProductCatalog()
 })
 
-describe('proxyProductsRequest', () => {
-  it('forwards mutation request init to the backend fetch call', async () => {
-    globalThis.fetch = vi.fn().mockResolvedValue(
-      new Response(JSON.stringify({ id: 'prod-901' }), {
-        status: 201,
-        headers: {
-          'content-type': 'application/json',
-        },
-      }),
-    )
-
-    await proxyProductsRequest('/products', undefined, {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: '{"name":"Portable SSD"}',
+describe('app-local product server helpers', () => {
+  it('reads the list directly from the app catalog', async () => {
+    const products = await fetchProductsFromBff({
+      q: 'MOU-210',
+      category: 'cat-electronics',
+      sort: 'name-asc',
+      page: 1,
     })
 
-    expect(globalThis.fetch).toHaveBeenCalledWith(
-      expect.any(URL),
-      expect.objectContaining({
-        method: 'POST',
-        body: '{"name":"Portable SSD"}',
-        headers: expect.any(Headers),
-      }),
-    )
-  })
-
-  it('preserves backend response headers that matter to proxy semantics', async () => {
-    globalThis.fetch = vi.fn().mockResolvedValue(
-      new Response(JSON.stringify({ data: [] }), {
-        status: 200,
-        headers: {
-          'content-type': 'application/json',
-          'cache-control': 'public, max-age=60',
-          etag: '"products-v1"',
-          vary: 'accept',
-        },
-      }),
-    )
-
-    const response = await proxyProductsRequest('/products')
-
-    expect(response.headers.get('content-type')).toBe('application/json')
-    expect(response.headers.get('cache-control')).toBe('public, max-age=60')
-    expect(response.headers.get('etag')).toBe('"products-v1"')
-    expect(response.headers.get('vary')).toBe('accept')
-  })
-
-  it('normalizes rejected upstream requests to a 502 JSON response', async () => {
-    globalThis.fetch = vi.fn().mockRejectedValue(new Error('connect ECONNREFUSED'))
-
-    const response = await proxyProductsRequest('/products')
-
-    await expect(response.json()).resolves.toEqual({
-      message: 'Products backend unavailable',
-      code: 'BAD_GATEWAY',
+    expect(products).toMatchObject({
+      data: [
+        expect.objectContaining({
+          id: 'prod-mouse-wireless',
+        }),
+      ],
+      page: 1,
+      pageSize: 4,
+      totalItems: 1,
+      totalPages: 1,
     })
-    expect(response.status).toBe(502)
-    expect(response.headers.get('content-type')).toContain('application/json')
   })
-})
 
-describe('fetchProductByIdFromBackend', () => {
   it('preserves 404 as a typed not-found error for SSR loaders', async () => {
-    globalThis.fetch = vi.fn().mockResolvedValue(
-      new Response(JSON.stringify({ message: 'Product not found' }), {
-        status: 404,
-        headers: { 'content-type': 'application/json' },
-      }),
-    )
-
-    await expect(fetchProductByIdFromBackend('prod-missing')).rejects.toBeInstanceOf(
-      ProductNotFoundError,
-    )
+    await expect(
+      fetchProductByIdFromBff('prod-missing'),
+    ).rejects.toBeInstanceOf(ProductNotFoundError)
   })
 })

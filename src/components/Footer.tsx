@@ -1,4 +1,5 @@
 import { useI18n } from '#/lib/i18n'
+import { CREATOR_GITHUB_URL } from '#/lib/creator'
 
 export default function Footer() {
   const year = new Date().getFullYear()
@@ -14,12 +15,28 @@ export default function Footer() {
           <p className="lab-note mt-2">
             &copy; {year} {copy.footer.built}
           </p>
+          <a
+            href={CREATOR_GITHUB_URL}
+            target="_blank"
+            rel="noreferrer"
+            className="lab-note mt-2 inline-flex text-[var(--lagoon-deep)] no-underline hover:text-[var(--sea-ink)]"
+          >
+            {copy.footer.creator}
+          </a>
         </div>
         <div className="flex flex-wrap items-center gap-2">
-          <span className="lab-chip lab-chip--route">{copy.footer.chips.router}</span>
-          <span className="lab-chip lab-chip--data">{copy.footer.chips.query}</span>
-          <span className="lab-chip lab-chip--tooling">{copy.footer.chips.tooling}</span>
-          <span className="lab-chip lab-chip--static">{copy.footer.chips.staticRefs}</span>
+          <span className="lab-chip lab-chip--route">
+            {copy.footer.chips.router}
+          </span>
+          <span className="lab-chip lab-chip--data">
+            {copy.footer.chips.query}
+          </span>
+          <span className="lab-chip lab-chip--tooling">
+            {copy.footer.chips.tooling}
+          </span>
+          <span className="lab-chip lab-chip--static">
+            {copy.footer.chips.staticRefs}
+          </span>
         </div>
       </div>
       <div className="page-wrap mt-5 flex flex-col items-center justify-between gap-4 border-t border-[var(--line)] pt-5 text-center sm:flex-row sm:text-left">
