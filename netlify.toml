@@ -1,5 +1,6 @@
 [build]
   command = "corepack pnpm build"
+  publish = ".output/public"
 
 [build.environment]
   NODE_VERSION = "22.14.0"
