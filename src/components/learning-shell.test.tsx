@@ -31,8 +31,25 @@ vi.mock('#/modules/products', () => ({
   },
 }))
 
+vi.mock('#/lib/i18n', async () => {
+  const actual = await vi.importActual<typeof import('#/lib/i18n')>('#/lib/i18n')
+
+  return {
+    ...actual,
+    useI18n: () => ({
+      locale: 'en',
+      setLocale: vi.fn(),
+      copy: actual.defaultI18nCopy,
+    }),
+  }
+})
+
 vi.mock('./ThemeToggle', () => ({
   default: () => <button type="button">Theme</button>,
+}))
+
+vi.mock('./LanguageToggle', () => ({
+  default: () => <button type="button">Language</button>,
 }))
 
 afterEach(() => {

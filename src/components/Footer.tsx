@@ -1,27 +1,29 @@
+import { useI18n } from '#/lib/i18n'
+
 export default function Footer() {
   const year = new Date().getFullYear()
+  const { copy } = useI18n()
 
   return (
     <footer className="mt-20 border-t border-[var(--line)] px-4 pb-14 pt-10 text-[var(--sea-ink-soft)]">
       <div className="page-wrap flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
         <div className="max-w-xl">
           <p className="m-0 text-sm text-[var(--sea-ink)]">
-            Personal TanStack learning playground for routes, loaders, query
-            flows, and experiments.
+            {copy.footer.description}
           </p>
           <p className="lab-note mt-2">
-            &copy; {year} Built for exploration, not dashboard theater.
+            &copy; {year} {copy.footer.built}
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
-          <span className="lab-chip lab-chip--route">Router</span>
-          <span className="lab-chip lab-chip--data">Query</span>
-          <span className="lab-chip lab-chip--tooling">Tooling</span>
-          <span className="lab-chip lab-chip--static">Static refs</span>
+          <span className="lab-chip lab-chip--route">{copy.footer.chips.router}</span>
+          <span className="lab-chip lab-chip--data">{copy.footer.chips.query}</span>
+          <span className="lab-chip lab-chip--tooling">{copy.footer.chips.tooling}</span>
+          <span className="lab-chip lab-chip--static">{copy.footer.chips.staticRefs}</span>
         </div>
       </div>
       <div className="page-wrap mt-5 flex flex-col items-center justify-between gap-4 border-t border-[var(--line)] pt-5 text-center sm:flex-row sm:text-left">
-        <p className="island-kicker m-0">TanStack Start laboratory shell</p>
+        <p className="island-kicker m-0">{copy.footer.shell}</p>
         <div className="flex justify-center gap-4">
           <a
             href="https://x.com/tan_stack"
@@ -29,7 +31,7 @@ export default function Footer() {
             rel="noreferrer"
             className="rounded-xl p-2 text-[var(--sea-ink-soft)] transition hover:bg-[var(--link-bg-hover)] hover:text-[var(--sea-ink)]"
           >
-            <span className="sr-only">Follow TanStack on X</span>
+            <span className="sr-only">{copy.footer.x}</span>
             <svg viewBox="0 0 16 16" aria-hidden="true" width="28" height="28">
               <path
                 fill="currentColor"
@@ -43,7 +45,7 @@ export default function Footer() {
             rel="noreferrer"
             className="rounded-xl p-2 text-[var(--sea-ink-soft)] transition hover:bg-[var(--link-bg-hover)] hover:text-[var(--sea-ink)]"
           >
-            <span className="sr-only">Go to TanStack GitHub</span>
+            <span className="sr-only">{copy.footer.github}</span>
             <svg viewBox="0 0 16 16" aria-hidden="true" width="28" height="28">
               <path
                 fill="currentColor"

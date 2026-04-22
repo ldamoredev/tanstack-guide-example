@@ -10,6 +10,19 @@ const mockMatchRoute = vi.fn()
 const mockCreateSubmit = vi.fn()
 const mockUpdateSubmit = vi.fn()
 
+vi.mock('#/lib/i18n', async () => {
+  const actual = await vi.importActual<typeof import('#/lib/i18n')>('#/lib/i18n')
+
+  return {
+    ...actual,
+    useI18n: () => ({
+      locale: 'en',
+      setLocale: vi.fn(),
+      copy: actual.defaultI18nCopy,
+    }),
+  }
+})
+
 vi.mock('@tanstack/react-query', async () => {
   const actual = await vi.importActual<object>('@tanstack/react-query')
 

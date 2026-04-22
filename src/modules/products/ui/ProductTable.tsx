@@ -4,7 +4,11 @@ import {
   useReactTable,
 } from '@tanstack/react-table'
 import { Link } from '@tanstack/react-router'
-import { getCategoryLabel } from '../model/search'
+import {
+  formatUsdCurrency,
+  getLocalizedCategoryLabel,
+  useI18n,
+} from '#/lib/i18n'
 import type { Product, ProductSortValue } from '../model/types'
 
 interface ProductTableProps {
@@ -18,12 +22,14 @@ export function ProductTable({
   activeSort,
   onSortToggle,
 }: ProductTableProps) {
+  const { copy, locale } = useI18n()
   const columns = [
     {
       accessorKey: 'name',
       header: () => (
         <SortHeader
-          label="Product"
+          label={copy.products.table.header.product}
+          sortKey="name"
           activeSort={activeSort}
           onToggle={() => onSortToggle('name')}
         />
@@ -45,26 +51,29 @@ export function ProductTable({
     },
     {
       accessorKey: 'categoryId',
-      header: 'Category',
+      header: copy.products.table.header.category,
       cell: ({ getValue }: { getValue: () => string }) =>
-        getCategoryLabel(getValue()),
+        getLocalizedCategoryLabel(getValue(), locale),
     },
     {
       accessorKey: 'price',
       header: () => (
         <SortHeader
-          label="Price"
+          label={copy.products.table.header.price}
+          sortKey="price"
           activeSort={activeSort}
           onToggle={() => onSortToggle('price')}
         />
       ),
-      cell: ({ getValue }: { getValue: () => number }) => `$${getValue()}`,
+      cell: ({ getValue }: { getValue: () => number }) =>
+        formatUsdCurrency(getValue(), locale),
     },
     {
       accessorKey: 'stock',
       header: () => (
         <SortHeader
-          label="Stock"
+          label={copy.products.table.header.stock}
+          sortKey="stock"
           activeSort={activeSort}
           onToggle={() => onSortToggle('stock')}
         />
@@ -73,7 +82,7 @@ export function ProductTable({
     },
     {
       id: 'actions',
-      header: 'Actions',
+      header: copy.products.table.header.actions,
       cell: ({ row }: { row: { original: Product } }) => (
         <Link
           to="/products/$productId"
@@ -81,7 +90,7 @@ export function ProductTable({
           search={(prev) => prev}
           className="text-sm font-semibold text-[var(--lagoon-deep)] no-underline"
         >
-          Inspect
+          {copy.products.table.inspect}
         </Link>
       ),
     },
@@ -97,14 +106,12 @@ export function ProductTable({
     <section className="island-shell mt-8 overflow-hidden rounded-2xl">
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--line)] px-4 py-4">
         <div>
-          <p className="island-kicker mb-2">Inspection grid</p>
+          <p className="island-kicker mb-2">{copy.products.table.kicker}</p>
           <h2 className="m-0 text-lg font-semibold text-[var(--sea-ink)]">
-            Scan records, compare fields, and open the next route.
+            {copy.products.table.title}
           </h2>
         </div>
-        <p className="lab-note m-0">
-          Sort cues stay in the header so row scanning remains fast.
-        </p>
+        <p className="lab-note m-0">{copy.products.table.note}</p>
       </div>
       <div className="overflow-x-auto">
         <table className="min-w-full border-collapse">
@@ -131,7 +138,8 @@ export function ProductTable({
             {table.getRowModel().rows.map((row) => (
               <tr
                 key={row.id}
-                className="odd:bg-[color-mix(in_oklab,var(--surface-strong)_88%,transparent)] even:bg-[color-mix(in_oklab,var(--lagoon)_5%,var(--surface))]"
+                className="odd:bg-[color-mix(in_oklab,var(--surface-strong)_92%,var(--lagoon)_8%)]
+           even:bg-[color-mix(in_oklab,var(--surface)_95%,var(--lagoon)_5%)]"
               >
                 {row.getVisibleCells().map((cell) => (
                   <td
@@ -149,7 +157,7 @@ export function ProductTable({
 
       {data.length === 0 && (
         <div className="px-4 py-5 text-sm text-[var(--sea-ink-soft)]">
-          No products match the current backend filters right now.
+          {copy.products.table.empty}
         </div>
       )}
     </section>
@@ -158,17 +166,16 @@ export function ProductTable({
 
 function SortHeader({
   label,
+  sortKey,
   activeSort,
   onToggle,
 }: {
   label: string
+  sortKey: 'name' | 'price' | 'stock'
   activeSort: ProductSortValue
   onToggle: () => void
 }) {
-  const indicator = getSortIndicator(
-    label.toLowerCase() as 'name' | 'price' | 'stock',
-    activeSort,
-  )
+  const indicator = getSortIndicator(sortKey, activeSort)
 
   return (
     <button

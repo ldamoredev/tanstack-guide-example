@@ -1,9 +1,12 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
 import { DEFAULT_PRODUCTS_SEARCH } from '#/modules/products'
+import { useI18n } from '#/lib/i18n'
 
 export const Route = createFileRoute('/')({ component: App })
 
 function App() {
+  const { copy, locale } = useI18n()
+
   return (
     <main className="page-wrap px-4 pb-10 pt-14">
       <section className="island-shell rise-in relative overflow-hidden rounded-[2rem] px-6 py-10 sm:px-10 sm:py-14">
@@ -11,41 +14,42 @@ function App() {
         <div className="pointer-events-none absolute -left-16 top-0 h-56 w-56 rounded-full bg-[radial-gradient(circle,rgba(34,211,238,0.22),transparent_70%)] blur-2xl" />
         <div className="pointer-events-none absolute -bottom-12 right-0 h-52 w-52 rounded-full bg-[radial-gradient(circle,rgba(139,92,246,0.16),transparent_72%)] blur-2xl" />
         <div className="mb-5 flex flex-wrap gap-2">
-          <span className="lab-chip lab-chip--route">overview</span>
-          <span className="lab-chip lab-chip--data">data-backed</span>
-          <span className="lab-chip lab-chip--static">static refs</span>
-          <span className="lab-chip lab-chip--tooling">tooling</span>
+          <span className="lab-chip lab-chip--route">
+            {copy.header.nav.overview.toLowerCase()}
+          </span>
+          <span className="lab-chip lab-chip--data">
+            {copy.products.chips.dataBacked}
+          </span>
+          <span className="lab-chip lab-chip--static">
+            {copy.footer.chips.staticRefs.toLowerCase()}
+          </span>
+          <span className="lab-chip lab-chip--tooling">
+            {copy.header.nav.tooling.toLowerCase()}
+          </span>
         </div>
-        <p className="island-kicker mb-3">Personal lab environment</p>
+        <p className="island-kicker mb-3">{copy.home.kicker}</p>
         <h1 className="display-title mb-5 max-w-4xl text-4xl leading-[0.96] font-bold text-[var(--sea-ink)] sm:text-6xl">
-          TanStack Learning Playground for routes, loaders, query flows, and
-          experiments.
+          {copy.home.title}
         </h1>
         <p className="mb-8 max-w-2xl text-base leading-8 text-[var(--sea-ink-soft)] sm:text-lg">
-          This app is now framed as a personal learning app instead of an
-          inventory console. Use it to trace route relationships, compare static
-          versus data-backed surfaces, and keep the TanStack mental model in
-          view while you explore.
+          {copy.home.description}
         </p>
         <div className="flex flex-wrap gap-3">
-          <Link
-            to="/dashboard"
-            className="lab-button"
-          >
-            Open Route Map
+          <Link to="/dashboard" className="lab-button">
+            {copy.home.ctaRouteMap}
           </Link>
           <Link
             to="/products"
             search={DEFAULT_PRODUCTS_SEARCH}
             className="lab-button lab-button-secondary"
           >
-            Explore Data Flow
+            {copy.home.ctaData}
           </Link>
-          <Link
-            to="/tooling"
-            className="lab-button lab-button-secondary"
-          >
-            Open Tooling
+          <Link to="/cheat-sheet" className="lab-button lab-button-secondary">
+            {copy.home.ctaGuide}
+          </Link>
+          <Link to="/tooling" className="lab-button lab-button-secondary">
+            {copy.home.ctaTooling}
           </Link>
         </div>
       </section>
@@ -53,32 +57,38 @@ function App() {
       <section className="mt-8 grid gap-4 md:grid-cols-3">
         {[
           [
-            'Routes',
-            'Track how the overview, nested routes, and supporting pages connect.',
+            copy.header.nav.routes,
+            copy.home.cards.routes,
             '/dashboard',
             'lab-chip--route',
           ],
           [
-            'Data',
-            'Use the products flow as the main loader, query, and cache exercise.',
+            copy.header.nav.data,
+            copy.home.cards.data,
             '/products',
             'lab-chip--data',
           ],
           [
-            'Tooling',
-            'Keep Devtools, command references, and mental models close at hand.',
+            copy.header.nav.cheatSheet,
+            copy.home.cards.cheatSheet,
+            '/cheat-sheet',
+            'lab-chip--tooling',
+          ],
+          [
+            copy.header.nav.tooling,
+            copy.home.cards.tooling,
             '/tooling',
             'lab-chip--tooling',
           ],
           [
-            'Categories',
-            'Intentional static reference screen for contrast against dynamic routes.',
+            copy.header.nav.static,
+            copy.home.cards.categories,
             '/categories',
             'lab-chip--static',
           ],
           [
-            'Suppliers',
-            'Another static route for comparing structure, not backend behavior.',
+            copy.header.nav.suppliers,
+            copy.home.cards.suppliers,
             '/suppliers',
             'lab-chip--static',
           ],
@@ -101,7 +111,7 @@ function App() {
                 : { to })}
               className="mt-4 inline-flex text-sm font-semibold text-[var(--lagoon-deep)] no-underline"
             >
-              Open {title}
+              {locale === 'es' ? `Abrir ${title}` : `Open ${title}`}
             </Link>
           </article>
         ))}
@@ -109,14 +119,9 @@ function App() {
 
       <section className="mt-8 grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
         <article className="island-shell rounded-2xl p-6">
-          <p className="island-kicker mb-3">Route map</p>
+          <p className="island-kicker mb-3">{copy.home.routeMap}</p>
           <div className="grid gap-3 text-sm text-[var(--sea-ink-soft)] md:grid-cols-2">
-            {[
-              'Overview -> route taxonomy and next steps',
-              'Routes -> relationship view and exploration order',
-              'Data -> loader hydration, query state, and BFF-backed flow',
-              'Static -> comparison surfaces that stay intentionally hardcoded',
-            ].map((item) => (
+            {copy.home.routeMapItems.map((item) => (
               <div
                 key={item}
                 className="rounded-2xl border border-[var(--line)] bg-[color-mix(in_oklab,var(--surface)_80%,transparent_20%)] px-4 py-3"
@@ -128,12 +133,11 @@ function App() {
         </article>
 
         <article className="island-shell rounded-2xl p-6">
-          <p className="island-kicker mb-3">How to explore</p>
+          <p className="island-kicker mb-3">{copy.home.howToExplore}</p>
           <ol className="m-0 grid gap-3 pl-5 text-sm leading-7 text-[var(--sea-ink-soft)]">
-            <li>Start with `Routes` to understand the shell.</li>
-            <li>Open `Data` to inspect the live TanStack flow.</li>
-            <li>Use `Static` to compare what intentionally does not move.</li>
-            <li>Keep `Tooling` nearby when you want to inspect behavior.</li>
+            {copy.home.howToExploreItems.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
           </ol>
         </article>
       </section>

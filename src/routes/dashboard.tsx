@@ -1,58 +1,58 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
+import { useI18n } from '#/lib/i18n'
 
 export const Route = createFileRoute('/dashboard')({
   component: Dashboard,
 })
 
-const cards = [
-  {
-    title: 'Overview',
-    description: 'Start at the orientation screen and pick the next concept to inspect.',
-    to: '/',
-    tone: 'lab-chip--route',
-  },
-  {
-    title: 'Products',
-    description: 'Main data-backed route for loaders, cache hydration, and mutations.',
-    to: '/products',
-    tone: 'lab-chip--data',
-  },
-  {
-    title: 'Categories',
-    description: 'Static reference surface that stays intentionally simple.',
-    to: '/categories',
-    tone: 'lab-chip--static',
-  },
-  {
-    title: 'Suppliers',
-    description: 'Companion static route for contrast against the dynamic flow.',
-    to: '/suppliers',
-    tone: 'lab-chip--static',
-  },
-  {
-    title: 'Tooling',
-    description: 'Inspect Devtools, commands, and the TanStack mental model.',
-    to: '/tooling',
-    tone: 'lab-chip--tooling',
-  },
-]
-
 function Dashboard() {
+  const { copy, locale } = useI18n()
+  const cards = [
+    {
+      title: copy.header.nav.overview,
+      description: copy.dashboard.cards.overview,
+      to: '/',
+      tone: 'lab-chip--route',
+    },
+    {
+      title: 'Products',
+      description: copy.dashboard.cards.products,
+      to: '/products',
+      tone: 'lab-chip--data',
+    },
+    {
+      title: 'Categories',
+      description: copy.dashboard.cards.categories,
+      to: '/categories',
+      tone: 'lab-chip--static',
+    },
+    {
+      title: copy.header.nav.suppliers,
+      description: copy.dashboard.cards.suppliers,
+      to: '/suppliers',
+      tone: 'lab-chip--static',
+    },
+    {
+      title: copy.header.nav.tooling,
+      description: copy.dashboard.cards.tooling,
+      to: '/tooling',
+      tone: 'lab-chip--tooling',
+    },
+  ]
+
   return (
     <main className="page-wrap px-4 py-12">
       <section className="island-shell rounded-[2rem] p-6 sm:p-8">
         <div className="mb-4 flex flex-wrap gap-2">
-          <span className="lab-chip lab-chip--route">route map</span>
-          <span className="lab-chip lab-chip--tooling">navigation model</span>
+          <span className="lab-chip lab-chip--route">{copy.dashboard.chips.routeMap}</span>
+          <span className="lab-chip lab-chip--tooling">{copy.dashboard.chips.navigationModel}</span>
         </div>
-        <p className="island-kicker mb-2">Routes</p>
+        <p className="island-kicker mb-2">{copy.header.nav.routes}</p>
         <h1 className="display-title mb-3 text-4xl font-bold text-[var(--sea-ink)] sm:text-5xl">
-          Trace the route graph before you dive into the code.
+          {copy.dashboard.title}
         </h1>
         <p className="m-0 max-w-3xl text-base leading-8 text-[var(--sea-ink-soft)]">
-          Use this screen as a quick map of the playground. It tells you which
-          routes are there for framing, which ones are intentionally static, and
-          where the real data-backed TanStack behavior lives.
+          {copy.dashboard.description}
         </p>
       </section>
 
@@ -70,19 +70,16 @@ function Dashboard() {
               to={card.to}
               className="text-sm font-semibold text-[var(--lagoon-deep)] no-underline"
             >
-              Open {card.title}
+              {locale === 'es' ? `Abrir ${card.title}` : `Open ${card.title}`}
             </Link>
           </article>
         ))}
       </section>
 
       <section className="island-shell mt-8 rounded-2xl p-6">
-        <p className="island-kicker mb-2">Reading order</p>
+        <p className="island-kicker mb-2">{copy.dashboard.readingOrder}</p>
         <p className="m-0 max-w-3xl text-sm leading-7 text-[var(--sea-ink-soft)]">
-          `Overview` explains the playground. `Products` shows the most complete
-          dynamic flow. `Categories` and `Suppliers` stay static on purpose so
-          the contrast is visible. `Tooling` is where you inspect behavior
-          instead of guessing.
+          {copy.dashboard.readingOrderText}
         </p>
       </section>
     </main>

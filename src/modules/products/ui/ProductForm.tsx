@@ -1,6 +1,12 @@
 import type React from 'react'
 import { useForm } from '@tanstack/react-form'
 import {
+  getLocalizedCategoryLabel,
+  getLocalizedProductFormError,
+  getLocalizedSupplierLabel,
+  useI18n,
+} from '#/lib/i18n'
+import {
   isProductFormValid,
   PRODUCT_FORM_CATEGORY_OPTIONS,
   PRODUCT_FORM_SUPPLIER_OPTIONS,
@@ -20,6 +26,7 @@ export function ProductForm({
   submitLabel,
   onSubmit,
 }: ProductFormProps) {
+  const { copy } = useI18n()
   const form = useForm({
     defaultValues,
     onSubmit: async ({ value }) => {
@@ -37,31 +44,31 @@ export function ProductForm({
       }}
     >
       <FieldGroup
-        title="Identity"
-        description="Define the record name and the SKU that anchors this product in the inspection grid."
+        title={copy.products.form.sections.identity}
+        description={copy.products.form.sections.identityDescription}
       >
         <div className="grid gap-4 md:grid-cols-2">
-          <ProductTextField form={form} name="name" label="Name" />
+          <ProductTextField form={form} name="name" label={copy.products.form.labels.name} />
           <ProductTextField form={form} name="sku" label="SKU" />
         </div>
       </FieldGroup>
 
       <FieldGroup
-        title="Inventory"
-        description="Control the price and stock values that surface in the control room."
+        title={copy.products.form.sections.inventory}
+        description={copy.products.form.sections.inventoryDescription}
       >
         <div className="grid gap-4 md:grid-cols-2">
           <ProductTextField
             form={form}
             name="price"
-            label="Price"
+            label={copy.products.form.labels.price}
             type="number"
             inputMode="decimal"
           />
           <ProductTextField
             form={form}
             name="stock"
-            label="Stock"
+            label={copy.products.form.labels.stock}
             type="number"
             inputMode="numeric"
           />
@@ -69,20 +76,20 @@ export function ProductForm({
       </FieldGroup>
 
       <FieldGroup
-        title="Relationships"
-        description="Attach the product to the category and supplier context used across the detail route."
+        title={copy.products.form.sections.relationships}
+        description={copy.products.form.sections.relationshipsDescription}
       >
         <div className="grid gap-4 md:grid-cols-2">
           <ProductSelectField
             form={form}
             name="categoryId"
-            label="Category"
+            label={copy.products.form.labels.category}
             options={PRODUCT_FORM_CATEGORY_OPTIONS}
           />
           <ProductSelectField
             form={form}
             name="supplierId"
-            label="Supplier"
+            label={copy.products.form.labels.supplier}
             options={PRODUCT_FORM_SUPPLIER_OPTIONS}
           />
         </div>
@@ -96,17 +103,16 @@ export function ProductForm({
         ]}
         children={([isValid, isSubmitting, isPristine]) => (
           <div className="island-shell rounded-2xl p-5">
-            <p className="island-kicker mb-2">Mutation status</p>
+            <p className="island-kicker mb-2">{copy.products.form.mutationStatus}</p>
             <p className="mb-4 text-sm leading-7 text-[var(--sea-ink-soft)]">
-              Validation runs in TanStack Form before the mutation is allowed to
-              leave this workspace.
+              {copy.products.form.mutationDescription}
             </p>
             <button
               type="submit"
               disabled={!isValid || isPristine || isSubmitting}
               className="lab-button disabled:pointer-events-none disabled:opacity-50"
             >
-              {isSubmitting ? 'Saving...' : submitLabel}
+              {isSubmitting ? copy.products.form.saving : submitLabel}
             </button>
           </div>
         )}
@@ -151,11 +157,12 @@ function ProductTextField({
   type?: React.HTMLInputTypeAttribute
   inputMode?: React.HTMLAttributes<HTMLInputElement>['inputMode']
 }) {
+  const { locale } = useI18n()
   return (
     <form.Field
       name={name}
       children={(field: any) => (
-        <label className="flex flex-col gap-2 text-sm font-semibold text-[var(--sea-ink)]">
+        <label className="lab-field-label">
           {label}
           <input
             aria-label={label}
@@ -167,10 +174,13 @@ function ProductTextField({
               field.handleChange(field.state.value)
             }}
             onChange={(event) => field.handleChange(event.target.value)}
-            className="rounded-xl border border-[var(--line)] bg-white/70 px-4 py-3 text-sm font-normal text-[var(--sea-ink)] outline-none"
+            className="lab-field"
           />
           <FieldErrors
-            error={validateProductFormValue(name, String(field.state.value ?? ''))}
+            error={getLocalizedProductFormError(
+              validateProductFormValue(name, String(field.state.value ?? '')),
+              locale,
+            )}
             touched={field.state.meta.isTouched}
           />
         </label>
@@ -190,31 +200,39 @@ function ProductSelectField({
   label: string
   options: ReadonlyArray<{ value: string; label: string }>
 }) {
+  const { copy, locale } = useI18n()
   return (
     <form.Field
       name={name}
       children={(field: any) => (
-        <label className="flex flex-col gap-2 text-sm font-semibold text-[var(--sea-ink)]">
+        <label className="lab-field-label">
           {label}
-          <select
-            aria-label={label}
-            value={String(field.state.value ?? '')}
-            onBlur={() => {
-              field.handleBlur()
-              field.handleChange(field.state.value)
-            }}
-            onChange={(event) => field.handleChange(event.target.value)}
-            className="rounded-xl border border-[var(--line)] bg-white/70 px-4 py-3 text-sm font-normal text-[var(--sea-ink)] outline-none"
-          >
-            <option value="">Select {label.toLowerCase()}</option>
-            {options.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
+          <div className="lab-select-wrap">
+            <select
+              aria-label={label}
+              value={String(field.state.value ?? '')}
+              onBlur={() => {
+                field.handleBlur()
+                field.handleChange(field.state.value)
+              }}
+              onChange={(event) => field.handleChange(event.target.value)}
+              className="lab-field lab-field--select"
+            >
+              <option value="">{copy.products.form.selectPrompt(label)}</option>
+              {options.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {name === 'categoryId'
+                    ? getLocalizedCategoryLabel(option.value, locale)
+                    : getLocalizedSupplierLabel(option.value)}
+                </option>
+              ))}
+            </select>
+          </div>
           <FieldErrors
-            error={validateProductFormValue(name, String(field.state.value ?? ''))}
+            error={getLocalizedProductFormError(
+              validateProductFormValue(name, String(field.state.value ?? '')),
+              locale,
+            )}
             touched={field.state.meta.isTouched}
           />
         </label>
