@@ -2,7 +2,7 @@ import { ExternalLink } from 'lucide-react'
 import type { ReactNode } from 'react'
 import type { Locale } from '#/lib/i18n'
 import { PROJECT_REPOSITORY_URL, cheatSheetMarkdown } from './content'
-import { parseMarkdownBlocks } from './markdown'
+import { parseMarkdownBlocks, type MarkdownBlock } from './markdown'
 
 const pageCopy = {
   en: {
@@ -28,62 +28,70 @@ const pageCopy = {
 export default function CheatSheetPage({ locale }: { locale: Locale }) {
   const copy = pageCopy[locale]
   const blocks = parseMarkdownBlocks(cheatSheetMarkdown[locale])
-  const toc = blocks.filter(
-    (block) => block.type === 'heading' && block.level === 2,
-  )
+  const toc = blocks.filter(isTocHeading)
 
   return (
     <main className="page-wrap px-4 py-12">
-      <section className="island-shell rounded-[2rem] p-6 sm:p-8">
-        <div className="mb-4 flex flex-wrap gap-2">
-          <span className="lab-chip lab-chip--tooling">{copy.kicker}</span>
-          <span className="lab-chip lab-chip--route">TanStack</span>
-        </div>
-        <h1 className="display-title mb-3 text-4xl font-bold text-[var(--sea-ink)] sm:text-5xl">
-          {blocks[0]?.type === 'heading' ? blocks[0].text : copy.kicker}
-        </h1>
-        <p className="m-0 max-w-3xl text-base leading-8 text-[var(--sea-ink-soft)]">
-          {copy.description}
-        </p>
-      </section>
+      <section
+        aria-label={`${copy.kicker} overview`}
+        className="island-shell rounded-[2rem] p-6 sm:p-8"
+      >
+        <div className="grid gap-6 lg:grid-cols-[1.25fr_0.75fr] lg:items-end">
+          <div>
+            <div className="mb-4 flex flex-wrap gap-2">
+              <span className="lab-chip lab-chip--tooling">{copy.kicker}</span>
+              <span className="lab-chip lab-chip--route">TanStack</span>
+            </div>
+            <h1 className="display-title mb-3 text-4xl font-bold text-[var(--sea-ink)] sm:text-5xl">
+              {blocks[0]?.type === 'heading' ? blocks[0].text : copy.kicker}
+            </h1>
+            <p className="m-0 max-w-3xl text-base leading-8 text-[var(--sea-ink-soft)]">
+              {copy.description}
+            </p>
+          </div>
 
-      <section className="mt-8 grid gap-6 lg:grid-cols-[0.72fr_1.28fr]">
-        <aside className="space-y-4">
-          <article className="island-shell sticky top-32 rounded-2xl p-5">
-            <h2 className="mt-0 mb-4 text-lg font-semibold text-[var(--sea-ink)]">
-              {copy.kicker}
-            </h2>
-            <nav className="grid gap-2">
-              {toc.map((block: any) => (
-                <a
-                  key={block.text}
-                  href={`#${toAnchor(block.text)}`}
-                  className="rounded-xl border border-[var(--line)] bg-[color-mix(in_oklab,var(--surface)_74%,transparent_26%)] px-3 py-2 text-sm font-semibold text-[var(--sea-ink-soft)] no-underline hover:text-[var(--sea-ink)]"
-                >
-                  {block.text}
-                </a>
-              ))}
-            </nav>
-          </article>
-
-          <article className="feature-card rounded-2xl p-5">
+          <div className="rounded-2xl border border-[var(--line)] bg-[color-mix(in_oklab,var(--surface)_76%,transparent_24%)] p-5">
             <p className="island-kicker mb-3">{copy.repoTitle}</p>
             <p className="text-sm leading-7 text-[var(--sea-ink-soft)]">
               {copy.repoDescription}
             </p>
-            <a
-              href={PROJECT_REPOSITORY_URL}
-              target="_blank"
-              rel="noreferrer"
-              className="lab-button mt-2"
-            >
-              {copy.repoAction}
-              <ExternalLink size={16} aria-hidden="true" />
-            </a>
-            <pre className="mt-4 overflow-x-auto rounded-2xl border border-[var(--line)] bg-[color-mix(in_oklab,var(--surface-strong)_78%,black_22%)] p-4 text-xs text-[var(--sea-ink)]">
-              <code>{`git clone ${PROJECT_REPOSITORY_URL}`}</code>
-            </pre>
-          </article>
+            <div className="mt-4 flex flex-wrap items-center gap-3">
+              <a
+                href={PROJECT_REPOSITORY_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="lab-button"
+              >
+                {copy.repoAction}
+                <ExternalLink size={16} aria-hidden="true" />
+              </a>
+              <code className="max-w-full overflow-x-auto whitespace-nowrap">
+                git clone {PROJECT_REPOSITORY_URL}
+              </code>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="mt-8 grid gap-6 lg:grid-cols-[0.72fr_1.28fr]">
+        <aside
+          aria-label={`${copy.kicker} navigation`}
+          className="island-shell sticky top-32 max-h-[calc(100vh-9rem)] overflow-y-auto rounded-2xl p-5"
+        >
+          <h2 className="mt-0 mb-4 text-lg font-semibold text-[var(--sea-ink)]">
+            {copy.kicker}
+          </h2>
+          <nav aria-label={`${copy.kicker} sections`} className="grid gap-2">
+            {toc.map((block: any) => (
+              <a
+                key={block.text}
+                href={`#${toAnchor(block.text)}`}
+                className="rounded-xl border border-[var(--line)] bg-[color-mix(in_oklab,var(--surface)_74%,transparent_26%)] px-3 py-2 text-sm font-semibold text-[var(--sea-ink-soft)] no-underline hover:text-[var(--sea-ink)]"
+              >
+                {block.text}
+              </a>
+            ))}
+          </nav>
         </aside>
 
         <article className="island-shell cheat-sheet-doc rounded-[2rem] p-6 sm:p-8">
@@ -94,6 +102,12 @@ export default function CheatSheetPage({ locale }: { locale: Locale }) {
       </section>
     </main>
   )
+}
+
+function isTocHeading(
+  block: MarkdownBlock,
+): block is Extract<MarkdownBlock, { type: 'heading'; level: 2 }> {
+  return block.type === 'heading' && block.level === 2
 }
 
 function MarkdownBlockView({

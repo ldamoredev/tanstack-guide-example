@@ -24,4 +24,21 @@ describe('CheatSheetPage', () => {
       'https://github.com/ldamoredev/tanstack-guide-example',
     )
   })
+
+  it('keeps the sticky sidebar focused on guide navigation and puts repository action in the hero', () => {
+    render(<CheatSheetPage locale="en" />)
+
+    const sidebar = screen.getByRole('complementary', {
+      name: /study guide navigation/i,
+    })
+    const hero = screen.getByRole('region', { name: /study guide overview/i })
+
+    expect(sidebar.className).toContain('sticky')
+    expect(
+      screen.getByRole('navigation', { name: /study guide sections/i }),
+    ).toBeTruthy()
+    expect(sidebar.textContent).not.toMatch(/clone the project/i)
+    expect(hero.textContent).toMatch(/clone the project/i)
+    expect(screen.getByRole('link', { name: /open repository/i })).toBeTruthy()
+  })
 })
