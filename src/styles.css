@@ -285,7 +285,8 @@ a {
 .nav-scroll {
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
-  mask-image: linear-gradient(90deg, black calc(100% - 2rem), transparent 100%);
+  padding-inline: 0.5rem;
+  scroll-padding-inline: 0.5rem;
 }
 
 .nav-scroll::-webkit-scrollbar {

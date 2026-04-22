@@ -37,7 +37,7 @@ export default function Header() {
           </div>
         </div>
 
-        <div className="border-t border-[var(--line)] pt-2 sm:border-t-0 sm:pt-0">
+        <div className="-mx-2 border-t border-[var(--line)] pt-2 sm:mx-0 sm:border-t-0 sm:pt-0">
           <div className="nav-scroll flex min-w-0 items-center gap-2 overflow-x-auto pb-1 text-sm font-semibold sm:gap-x-5 sm:pb-0">
             <Link
               to="/"
@@ -82,12 +82,6 @@ export default function Header() {
               activeProps={{ className: 'nav-link is-active' }}
             >
               {copy.header.nav.tooling}
-            </Link>
-            <Link
-              to="/suppliers"
-              className="lab-note shrink-0 no-underline transition hover:text-[var(--sea-ink)]"
-            >
-              {copy.header.nav.suppliers}
             </Link>
           </div>
         </div>

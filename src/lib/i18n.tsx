@@ -81,7 +81,6 @@ const messages = {
         static: 'Static',
         cheatSheet: 'Guide',
         tooling: 'Tooling',
-        suppliers: 'Suppliers',
       },
     },
     footer: {
@@ -119,8 +118,6 @@ const messages = {
           'Keep Devtools, command references, and mental models close at hand.',
         categories:
           'Intentional static reference screen for contrast against dynamic routes.',
-        suppliers:
-          'Another static route for comparing structure, not data behavior.',
       },
       routeMap: 'Route map',
       routeMapItems: [
@@ -143,7 +140,7 @@ const messages = {
         'Use this screen as a quick map of the playground. It tells you which routes are there for framing, which ones are intentionally static, and where the real data-backed TanStack behavior lives.',
       readingOrder: 'Reading order',
       readingOrderText:
-        '`Overview` explains the playground. `Products` shows the most complete dynamic flow. `Categories` and `Suppliers` stay static on purpose so the contrast is visible. `Tooling` is where you inspect behavior instead of guessing.',
+        '`Overview` explains the playground. `Products` shows the most complete dynamic flow. `Static` stays simple on purpose so the contrast is visible. `Tooling` is where you inspect behavior instead of guessing.',
       chips: {
         routeMap: 'route map',
         navigationModel: 'navigation model',
@@ -154,8 +151,6 @@ const messages = {
         products:
           'Main data-backed route for loaders, cache hydration, and mutations.',
         categories: 'Static reference surface that stays intentionally simple.',
-        suppliers:
-          'Companion static route for contrast against the dynamic flow.',
         tooling: 'Inspect Devtools, commands, and the TanStack mental model.',
       },
     },
@@ -176,30 +171,6 @@ const messages = {
         furniture: 'Furniture',
         equipment: 'Equipment',
         accessories: 'Accessories',
-      },
-    },
-    suppliers: {
-      title: 'Static supplier route for quick structure checks.',
-      description:
-        'Static reference surface for comparing simple route rendering with the more dynamic data-backed areas. It is intentionally useful without pretending to be finished backend work.',
-      deliveryEstimate: (eta: string) =>
-        `Static example delivery estimate: ${eta}`,
-      learningCue: 'Learning cue',
-      learningCueText:
-        'Use this route as a reminder that not every page needs data wiring. Sometimes the clearest teaching surface is the one that holds still.',
-      chips: {
-        static: 'static',
-        referenceRoute: 'reference route',
-      },
-      status: {
-        preferred: 'Preferred',
-        onboarding: 'Onboarding',
-        active: 'Active',
-      },
-      eta: {
-        twoDays: '2 days',
-        fourDays: '4 days',
-        oneDay: '1 day',
       },
     },
     tooling: {
@@ -416,7 +387,6 @@ const messages = {
         static: 'Estático',
         cheatSheet: 'Guía',
         tooling: 'Herramientas',
-        suppliers: 'Proveedores',
       },
     },
     footer: {
@@ -453,8 +423,6 @@ const messages = {
         tooling: 'Mantén Devtools, comandos y modelos mentales siempre a mano.',
         categories:
           'Pantalla de referencia estática para contrastar con rutas dinámicas.',
-        suppliers:
-          'Otra ruta estática para comparar estructura, no comportamiento de backend.',
       },
       routeMap: 'Mapa de rutas',
       routeMapItems: [
@@ -477,7 +445,7 @@ const messages = {
         'Usa esta pantalla como mapa rápido del laboratorio. Te muestra qué rutas sirven para orientar, cuáles son intencionalmente estáticas y dónde vive el comportamiento real de TanStack con datos.',
       readingOrder: 'Orden de lectura',
       readingOrderText:
-        '`Resumen` explica el laboratorio. `Productos` muestra el flujo dinámico más completo. `Categorías` y `Proveedores` permanecen estáticos a propósito para que el contraste sea visible. `Herramientas` es donde inspeccionas el comportamiento en vez de adivinar.',
+        '`Resumen` explica el laboratorio. `Productos` muestra el flujo dinámico más completo. `Estático` permanece simple a propósito para que el contraste sea visible. `Herramientas` es donde inspeccionas el comportamiento en vez de adivinar.',
       chips: {
         routeMap: 'mapa de rutas',
         navigationModel: 'modelo de navegación',
@@ -489,8 +457,6 @@ const messages = {
           'Ruta principal con datos para loaders, hidratación de caché y mutaciones.',
         categories:
           'Superficie de referencia estática que se mantiene simple a propósito.',
-        suppliers:
-          'Ruta estática complementaria para contrastar con el flujo dinámico.',
         tooling:
           'Inspecciona Devtools, comandos y el modelo mental de TanStack.',
       },
@@ -512,30 +478,6 @@ const messages = {
         furniture: 'Muebles',
         equipment: 'Equipamiento',
         accessories: 'Accesorios',
-      },
-    },
-    suppliers: {
-      title: 'Ruta estática de proveedores para revisar estructura rápido.',
-      description:
-        'Superficie de referencia estática para comparar renderizado simple de rutas con las áreas más dinámicas y respaldadas por datos. Es útil a propósito sin fingir que ya es trabajo de backend terminado.',
-      deliveryEstimate: (eta: string) =>
-        `Estimación estática de entrega: ${eta}`,
-      learningCue: 'Pista de aprendizaje',
-      learningCueText:
-        'Usa esta ruta como recordatorio de que no toda página necesita cableado de datos. A veces la superficie didáctica más clara es la que se queda quieta.',
-      chips: {
-        static: 'estático',
-        referenceRoute: 'ruta de referencia',
-      },
-      status: {
-        preferred: 'Preferido',
-        onboarding: 'En incorporación',
-        active: 'Activo',
-      },
-      eta: {
-        twoDays: '2 días',
-        fourDays: '4 días',
-        oneDay: '1 día',
       },
     },
     tooling: {

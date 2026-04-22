@@ -31,18 +31,18 @@ export default function CheatSheetPage({ locale }: { locale: Locale }) {
   const toc = blocks.filter(isTocHeading)
 
   return (
-    <main className="page-wrap px-3 py-8 sm:px-4 sm:py-12">
+    <main className="page-wrap overflow-hidden px-3 py-8 sm:px-4 sm:py-12">
       <section
         aria-label={`${copy.kicker} overview`}
-        className="island-shell rounded-[1.5rem] p-4 sm:rounded-[2rem] sm:p-8"
+        className="island-shell overflow-hidden rounded-[1.5rem] p-4 sm:rounded-[2rem] sm:p-8"
       >
-        <div className="grid gap-6 lg:grid-cols-[1.25fr_0.75fr] lg:items-end">
-          <div>
+        <div className="grid min-w-0 gap-6 lg:grid-cols-[1.25fr_0.75fr] lg:items-end">
+          <div className="min-w-0">
             <div className="mb-4 flex flex-wrap gap-2">
               <span className="lab-chip lab-chip--tooling">{copy.kicker}</span>
               <span className="lab-chip lab-chip--route">TanStack</span>
             </div>
-            <h1 className="display-title mb-3 text-3xl font-bold text-[var(--sea-ink)] sm:text-5xl">
+            <h1 className="display-title mb-3 max-w-full text-3xl leading-tight font-bold text-wrap text-[var(--sea-ink)] sm:text-5xl">
               {blocks[0]?.type === 'heading' ? blocks[0].text : copy.kicker}
             </h1>
             <p className="m-0 max-w-3xl text-base leading-8 text-[var(--sea-ink-soft)]">
@@ -50,22 +50,22 @@ export default function CheatSheetPage({ locale }: { locale: Locale }) {
             </p>
           </div>
 
-          <div className="rounded-2xl border border-[var(--line)] bg-[color-mix(in_oklab,var(--surface)_76%,transparent_24%)] p-5">
+          <div className="min-w-0 rounded-2xl border border-[var(--line)] bg-[color-mix(in_oklab,var(--surface)_76%,transparent_24%)] p-4 sm:p-5">
             <p className="island-kicker mb-3">{copy.repoTitle}</p>
             <p className="text-sm leading-7 text-[var(--sea-ink-soft)]">
               {copy.repoDescription}
             </p>
-            <div className="mt-4 flex flex-wrap items-center gap-3">
+            <div className="mt-4 grid min-w-0 gap-3 sm:flex sm:flex-wrap sm:items-center">
               <a
                 href={PROJECT_REPOSITORY_URL}
                 target="_blank"
                 rel="noreferrer"
-                className="lab-button"
+                className="lab-button justify-center sm:w-auto"
               >
                 {copy.repoAction}
                 <ExternalLink size={16} aria-hidden="true" />
               </a>
-              <code className="max-w-full overflow-x-auto whitespace-nowrap">
+              <code className="block max-w-full overflow-x-auto whitespace-nowrap">
                 git clone {PROJECT_REPOSITORY_URL}
               </code>
             </div>

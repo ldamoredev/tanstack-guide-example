@@ -27,12 +27,6 @@ function Dashboard() {
       tone: 'lab-chip--static',
     },
     {
-      title: copy.header.nav.suppliers,
-      description: copy.dashboard.cards.suppliers,
-      to: '/suppliers',
-      tone: 'lab-chip--static',
-    },
-    {
       title: copy.header.nav.tooling,
       description: copy.dashboard.cards.tooling,
       to: '/tooling',
@@ -44,8 +38,12 @@ function Dashboard() {
     <main className="page-wrap px-4 py-12">
       <section className="island-shell rounded-[2rem] p-6 sm:p-8">
         <div className="mb-4 flex flex-wrap gap-2">
-          <span className="lab-chip lab-chip--route">{copy.dashboard.chips.routeMap}</span>
-          <span className="lab-chip lab-chip--tooling">{copy.dashboard.chips.navigationModel}</span>
+          <span className="lab-chip lab-chip--route">
+            {copy.dashboard.chips.routeMap}
+          </span>
+          <span className="lab-chip lab-chip--tooling">
+            {copy.dashboard.chips.navigationModel}
+          </span>
         </div>
         <p className="island-kicker mb-2">{copy.header.nav.routes}</p>
         <h1 className="display-title mb-3 text-4xl font-bold text-[var(--sea-ink)] sm:text-5xl">

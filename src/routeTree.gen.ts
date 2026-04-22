@@ -10,7 +10,6 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ToolingRouteImport } from './routes/tooling'
-import { Route as SuppliersRouteImport } from './routes/suppliers'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as CheatSheetRouteImport } from './routes/cheat-sheet'
 import { Route as CategoriesRouteImport } from './routes/categories'
@@ -28,11 +27,6 @@ import { Route as ApiProductsProductIdRouteImport } from './routes/api/products/
 const ToolingRoute = ToolingRouteImport.update({
   id: '/tooling',
   path: '/tooling',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SuppliersRoute = SuppliersRouteImport.update({
-  id: '/suppliers',
-  path: '/suppliers',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardRoute = DashboardRouteImport.update({
@@ -107,7 +101,6 @@ export interface FileRoutesByFullPath {
   '/categories': typeof CategoriesRoute
   '/cheat-sheet': typeof CheatSheetRoute
   '/dashboard': typeof DashboardRoute
-  '/suppliers': typeof SuppliersRoute
   '/tooling': typeof ToolingRoute
   '/api/products': typeof ApiProductsRouteWithChildren
   '/products/$productId': typeof ProductsProductIdRouteWithChildren
@@ -124,7 +117,6 @@ export interface FileRoutesByTo {
   '/categories': typeof CategoriesRoute
   '/cheat-sheet': typeof CheatSheetRoute
   '/dashboard': typeof DashboardRoute
-  '/suppliers': typeof SuppliersRoute
   '/tooling': typeof ToolingRoute
   '/api/products': typeof ApiProductsRouteWithChildren
   '/products/$productId': typeof ProductsProductIdRouteWithChildren
@@ -142,7 +134,6 @@ export interface FileRoutesById {
   '/categories': typeof CategoriesRoute
   '/cheat-sheet': typeof CheatSheetRoute
   '/dashboard': typeof DashboardRoute
-  '/suppliers': typeof SuppliersRoute
   '/tooling': typeof ToolingRoute
   '/api/products': typeof ApiProductsRouteWithChildren
   '/products/$productId': typeof ProductsProductIdRouteWithChildren
@@ -161,7 +152,6 @@ export interface FileRouteTypes {
     | '/categories'
     | '/cheat-sheet'
     | '/dashboard'
-    | '/suppliers'
     | '/tooling'
     | '/api/products'
     | '/products/$productId'
@@ -178,7 +168,6 @@ export interface FileRouteTypes {
     | '/categories'
     | '/cheat-sheet'
     | '/dashboard'
-    | '/suppliers'
     | '/tooling'
     | '/api/products'
     | '/products/$productId'
@@ -195,7 +184,6 @@ export interface FileRouteTypes {
     | '/categories'
     | '/cheat-sheet'
     | '/dashboard'
-    | '/suppliers'
     | '/tooling'
     | '/api/products'
     | '/products/$productId'
@@ -213,7 +201,6 @@ export interface RootRouteChildren {
   CategoriesRoute: typeof CategoriesRoute
   CheatSheetRoute: typeof CheatSheetRoute
   DashboardRoute: typeof DashboardRoute
-  SuppliersRoute: typeof SuppliersRoute
   ToolingRoute: typeof ToolingRoute
   ApiProductsRoute: typeof ApiProductsRouteWithChildren
   ProductsProductIdRoute: typeof ProductsProductIdRouteWithChildren
@@ -230,13 +217,6 @@ declare module '@tanstack/react-router' {
       path: '/tooling'
       fullPath: '/tooling'
       preLoaderRoute: typeof ToolingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/suppliers': {
-      id: '/suppliers'
-      path: '/suppliers'
-      fullPath: '/suppliers'
-      preLoaderRoute: typeof SuppliersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dashboard': {
@@ -362,7 +342,6 @@ const rootRouteChildren: RootRouteChildren = {
   CategoriesRoute: CategoriesRoute,
   CheatSheetRoute: CheatSheetRoute,
   DashboardRoute: DashboardRoute,
-  SuppliersRoute: SuppliersRoute,
   ToolingRoute: ToolingRoute,
   ApiProductsRoute: ApiProductsRouteWithChildren,
   ProductsProductIdRoute: ProductsProductIdRouteWithChildren,

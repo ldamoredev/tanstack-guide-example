@@ -86,12 +86,6 @@ function App() {
             '/categories',
             'lab-chip--static',
           ],
-          [
-            copy.header.nav.suppliers,
-            copy.home.cards.suppliers,
-            '/suppliers',
-            'lab-chip--static',
-          ],
         ].map(([title, desc, to, tone], index) => (
           <article
             key={title}
