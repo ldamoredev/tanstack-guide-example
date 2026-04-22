@@ -15,12 +15,12 @@ const pageCopy = {
     repoAction: 'Open repository',
   },
   es: {
-    kicker: 'Guia de estudio',
+    kicker: 'Guía de estudio',
     description:
-      'Una cheat-sheet especifica del repo para aprender las piezas de TanStack desde este playground.',
+      'Una cheat-sheet específica del repo para aprender las piezas de TanStack desde este playground.',
     repoTitle: 'Clona el proyecto',
     repoDescription:
-      'Abre el repositorio cuando quieras clonar el proyecto, inspeccionar el codigo o comparar tus experimentos locales contra la app de aprendizaje.',
+      'Abre el repositorio cuando quieras clonar el proyecto, inspeccionar el código o comparar tus experimentos locales contra la app de aprendizaje.',
     repoAction: 'Abrir repositorio',
   },
 } as const

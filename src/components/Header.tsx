@@ -48,6 +48,13 @@ export default function Header() {
               {copy.header.nav.overview}
             </Link>
             <Link
+              to="/cheat-sheet"
+              className="nav-link"
+              activeProps={{ className: 'nav-link is-active' }}
+            >
+              {copy.header.nav.cheatSheet}
+            </Link>
+            <Link
               to="/dashboard"
               className="nav-link"
               activeProps={{ className: 'nav-link is-active' }}
@@ -68,13 +75,6 @@ export default function Header() {
               activeProps={{ className: 'nav-link is-active' }}
             >
               {copy.header.nav.static}
-            </Link>
-            <Link
-              to="/cheat-sheet"
-              className="nav-link"
-              activeProps={{ className: 'nav-link is-active' }}
-            >
-              {copy.header.nav.cheatSheet}
             </Link>
             <Link
               to="/tooling"

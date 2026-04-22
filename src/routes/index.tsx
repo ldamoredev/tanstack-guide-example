@@ -35,7 +35,10 @@ function App() {
           {copy.home.description}
         </p>
         <div className="flex flex-wrap gap-3">
-          <Link to="/dashboard" className="lab-button">
+          <Link to="/cheat-sheet" className="lab-button">
+            {copy.home.ctaGuide}
+          </Link>
+          <Link to="/dashboard" className="lab-button lab-button-secondary">
             {copy.home.ctaRouteMap}
           </Link>
           <Link
@@ -45,9 +48,6 @@ function App() {
           >
             {copy.home.ctaData}
           </Link>
-          <Link to="/cheat-sheet" className="lab-button lab-button-secondary">
-            {copy.home.ctaGuide}
-          </Link>
           <Link to="/tooling" className="lab-button lab-button-secondary">
             {copy.home.ctaTooling}
           </Link>
@@ -56,6 +56,12 @@ function App() {
 
       <section className="mt-8 grid gap-4 md:grid-cols-3">
         {[
+          [
+            copy.header.nav.cheatSheet,
+            copy.home.cards.cheatSheet,
+            '/cheat-sheet',
+            'lab-chip--tooling',
+          ],
           [
             copy.header.nav.routes,
             copy.home.cards.routes,
@@ -67,12 +73,6 @@ function App() {
             copy.home.cards.data,
             '/products',
             'lab-chip--data',
-          ],
-          [
-            copy.header.nav.cheatSheet,
-            copy.home.cards.cheatSheet,
-            '/cheat-sheet',
-            'lab-chip--tooling',
           ],
           [
             copy.header.nav.tooling,
